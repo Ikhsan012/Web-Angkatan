@@ -6,7 +6,7 @@ import Typewriter from 'astro-typewriter';
 
 const { data: totalStudents } = await supabase.from('classes').select('jumlah')
 const { data: classes } = await supabase.from('classes').select('*');
-const { data: galleries } = await supabase.from('galleries').select('*').limit(500);
+const { data: galleries } = await supabase.from('galleries').select('*').limit(1600);
 const randomPhotos = [...(galleries || [])]
   .sort(() => Math.random() - 0.7)
   .slice(0, 6);
