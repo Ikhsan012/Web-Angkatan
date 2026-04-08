@@ -1,0 +1,134 @@
+---
+import Layout from '../layout/navbar.astro';
+import { supabase } from '../lib/supabase.js';
+import '../styles/global.css'
+import Typewriter from 'astro-typewriter';
+
+const { data: totalStudents } = await supabase.from('classes').select('jumlah')
+const { data: classes } = await supabase.from('classes').select('*');
+const { data: galleries } = await supabase.from('galleries').select('*').limit(500);
+const randomPhotos = [...(galleries || [])]
+  .sort(() => Math.random() - 0.7)
+  .slice(0, 6);
+
+  const totalsiswa = totalStudents ? totalStudents.reduce((total, kelas) => total + (kelas.jumlah || 0 ), 0) : 0
+
+---
+
+<Layout title="Home - ATHARVA TRIASTA">
+  
+  <section class="relative h-[75vh] flex items-center justify-center text-center">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070')] bg-cover bg-center bg-no-repeat opacity-40 mix-blend-overlay"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
+
+    <div class="relative z-10 px-6 max-w-4xl mx-auto mt-16">
+      <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 text-sm font-semibold tracking-wider mb-6">
+        LULUSAN 2026 - SMA 2 PANGKEP
+      </span>
+      <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 drop-shadow-lg">
+        <Typewriter
+  messages={['ATHARVA TRIASTA']}
+  writeSpeed={75}
+  deleteSpeed={50}
+  waitWritten={1500}
+  waitDeleted={1000}
+/>
+      </h1>
+      <p class="text-lg md:text-2xl text-gray-300 font-medium tracking-wide max-w-2xl mx-auto leading-relaxed">
+        Selamat datang di Landing Page Angkatan 38. Tempat semua cerita, tawa, dan perjuangan kita terekam abadi.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-6 -mt-16 relative z-20">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-gray-800/90 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-gray-700 text-center hover:border-blue-500/50 transition-all transform hover:-translate-y-1">
+        <h2 class="text-6xl font-black text-blue-400 mb-2">{totalsiswa || 0}</h2>
+        <p class="text-gray-400 uppercase tracking-widest text-sm font-bold">Jumlah Siswa</p>
+      </div>
+      
+      <div class="bg-gray-800/90 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-gray-700 text-center hover:border-emerald-500/50 transition-all transform hover:-translate-y-1">
+        <h2 class="text-6xl font-black text-emerald-400 mb-2">{classes?.length || 0}</h2>
+        <p class="text-gray-400 uppercase tracking-widest text-sm font-bold">Jumlah Kelas</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 my-24">
+    <div class="flex items-end justify-between mb-10 border-b border-gray-800 pb-4">
+      <div>
+        <h3 class="text-3xl font-bold text-white mb-1">Momen Ceremony</h3>
+        <p class="text-gray-400 text-sm">Cuplikan memori tak terlupakan.</p>
+      </div>
+      <a href="/galeri" class="text-blue-400 hover:text-blue-300 text-sm font-semibold transition-colors flex items-center gap-1">
+        Lihat Semua <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </a>
+    </div>
+    
+    {randomPhotos && randomPhotos.length > 0 ? (
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6 auto-rows-[250px]">
+        {randomPhotos.map((foto) => (
+          <div class="bg-gray-800 rounded-2xl overflow-hidden group relative cursor-pointer shadow-lg border border-gray-700">
+            <img src={foto.image_url} alt={foto.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+              <span class="text-white font-semibold text-lg">{foto.title}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-20 bg-gray-800/30 rounded-3xl border border-dashed border-gray-700">
+        <svg class="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        <p class="text-gray-400 text-lg font-medium">Belum ada dokumentasi yang diunggah.</p>
+      </div>
+      )}
+
+      <div class="max-w-7xl mx-auto px-6 py-16 animate-fade-in-up" style="animation-delay: 0.2s;">
+      
+      <div class="text-center mb-10">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
+          Aftermovie <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Angkatan 38</span>
+        </h2>
+        <p class="text-gray-400 text-sm md:text-lg max-w-2xl mx-auto">
+          Video Angkatan 38 ATHARVA TRIASTA
+        </p>
+      </div>
+
+      <div class="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-[0_0_40px_rgba(59,130,246,0.1)] border border-gray-800 bg-gray-900 group aspect-[4/3] sm:aspect-video flex items-center justify-center transition-transform duration-700 hover:scale-[1.02] p-4">
+        
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-800 via-gray-900 to-black opacity-80"></div>
+        
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+           <div class="w-32 h-32 md:w-40 md:h-40 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+        </div>
+
+        <div class="relative z-10 flex flex-col items-center">
+          
+          <div class="w-14 h-14 md:w-20 md:h-20 bg-gray-900/80 backdrop-blur-md rounded-full flex items-center justify-center mb-4 md:mb-6 border border-gray-700 shadow-2xl relative overflow-hidden">
+             <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent"></div>
+             <svg class="w-6 h-6 md:w-8 md:h-8 text-gray-500 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          
+          <h3 class="text-xl sm:text-2xl md:text-3xl font-black tracking-widest md:tracking-[0.3em] uppercase bg-clip-text text-transparent bg-gradient-to-r from-gray-300 to-gray-600 drop-shadow-sm text-center">
+            Coming Soon
+          </h3>
+          
+          <div class="mt-3 md:mt-4 flex items-center gap-1.5 md:gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm">
+            <span class="relative flex h-1.5 w-1.5 md:h-2 md:w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-1.5 w-1.5 md:h-2 md:w-2 bg-emerald-500"></span>
+            </span>
+            <span class="text-emerald-400 text-[9px] md:text-xs font-bold tracking-wider md:tracking-widest">Tanggal 18 Februari 2026</span>
+          </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full h-1 md:h-1.5 bg-gray-800/50 backdrop-blur-sm">
+          <div class="h-full bg-gradient-to-r from-blue-500 to-emerald-500 w-1/3 animate-pulse opacity-70"></div>
+        </div>
+        
+      </div>
+    </div>
+
+  </section>
+
+</Layout>

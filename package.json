@@ -1,0 +1,21 @@
+{
+  "name": "atharva-triasta",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.100.1",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.1",
+    "astro-typewriter": "^1.2.0",
+    "tailwindcss": "^4.2.2"
+  }
+}
