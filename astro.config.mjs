@@ -1,18 +1,16 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
-
+import vercel from '@astrojs/vercel'; // Ganti dari '@astrojs/node'
 import tailwindcss from '@tailwindcss/vite';
 
-import node from '@astrojs/node';
-
-import vercel from '@astrojs/vercel';
-
-// https://astro.build/config
 export default defineConfig({
+  // Pakai adapter Vercel biar sinkron sama package.json lu
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
+  output: 'server', // Atau 'hybrid' tergantung kebutuhan data dinamis lu
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
   },
-
-  output: 'server',
-  adapter: vercel()
 });
