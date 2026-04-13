@@ -9,41 +9,49 @@ const { data: confessions } = await supabase
   .order('created_at', { ascending: false });
 ---
 
-<Layout title="Confess - ATHARVA TRIASTA">
+<Layout title="Pesan Rahasia - ATHARVA TRIASTA">
   <div class="max-w-4xl mx-auto px-6 py-12 mt-10">
     
-    <div class="mb-12 text-center">
-      <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-        Pesan <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-400">Tersembunyi</span>
+    <div class="mb-16 text-center border-b-4 border-stone-800 pb-8">
+      <span class="inline-block py-1 px-3 bg-pink-500 border-2 border-stone-900 text-stone-900 text-xs font-mono font-bold tracking-widest mb-6 shadow-[4px_4px_0_0_#1c1917] transform rotate-2">
+        1000% ANONIM // TOP SECRET
+      </span>
+      <h1 class="text-5xl md:text-7xl font-black text-stone-100 tracking-tighter mb-4 uppercase drop-shadow-[4px_4px_0_#292524]">
+        Pesan Rahasia
       </h1>
-      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-      Ada yang belum sempat tersampaikan? Tulis di sini. 1000% Anonim, 
+      <p class="text-stone-400 font-mono text-lg max-w-2xl mx-auto font-bold uppercase tracking-widest">
+        Ada yang belum sempat tersampaikan? Kirim surat kalengmu di sini.
       </p>
     </div>
 
-    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 md:p-8 shadow-2xl mb-16 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+    <div class="bg-[#f4ecd8] border-4 border-stone-900 rounded-none p-8 md:p-10 shadow-[16px_16px_0_0_#1c1917] mb-24 relative transform -rotate-1">
       
-      <form id="form-confess" class="relative z-10 flex flex-col gap-4">
+      <div class="absolute -top-5 -right-4 w-24 h-24 bg-stone-900 text-pink-500 rounded-full flex items-center justify-center border-4 border-[#f4ecd8] shadow-[4px_4px_0_0_#1c1917] transform rotate-12 pointer-events-none z-20">
+        <span class="font-black text-center leading-tight tracking-tighter uppercase transform -rotate-12">
+          RAHASIA<br>NEGARA
+        </span>
+      </div>
+
+      <form id="form-confess" class="relative z-10 flex flex-col gap-6 mt-4">
         <div>
-          <label for="tujuan" class="block text-sm font-medium text-gray-400 mb-1">Untuk Siapa?</label>
+          <label for="tujuan" class="block text-sm font-mono font-black text-stone-900 mb-2 uppercase tracking-widest">TARGET PENERIMA</label>
           <input 
             type="text" 
             id="tujuan" 
-            placeholder="Inisial / Nama / Kelas..." 
-            class="w-full bg-gray-950 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-colors"
+            placeholder="CTH: INISIAL / NAMA / KELAS..." 
+            class="w-full bg-stone-100 border-4 border-stone-900 px-4 py-3 text-stone-900 font-mono font-bold uppercase focus:outline-none focus:bg-white focus:shadow-[6px_6px_0_0_#ec4899] transition-all placeholder-stone-400"
             required
             maxlength="50"
           />
         </div>
         
         <div>
-          <label for="pesan" class="block text-sm font-medium text-gray-400 mb-1">Isi Pesan / Confess</label>
+          <label for="pesan" class="block text-sm font-mono font-black text-stone-900 mb-2 uppercase tracking-widest">ISI SURAT ANDA</label>
           <textarea 
             id="pesan" 
-            rows="4" 
-            placeholder="Jujur aja, mumpung hari terakhir..." 
-            class="w-full bg-gray-950 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-colors resize-none"
+            rows="5" 
+            placeholder="JUJUR AJA, MUMPUNG HARI TERAKHIR..." 
+            class="w-full bg-stone-100 border-4 border-stone-900 px-4 py-3 text-stone-900 font-mono font-bold focus:outline-none focus:bg-white focus:shadow-[6px_6px_0_0_#ec4899] transition-all resize-none placeholder-stone-400"
             required
             maxlength="500"
           ></textarea>
@@ -52,32 +60,44 @@ const { data: confessions } = await supabase
         <button 
           type="submit" 
           id="btn-kirim"
-          class="mt-2 bg-gradient-to-r from-pink-600 to-rose-500 hover:from-pink-500 hover:to-rose-400 text-white font-bold py-3 px-6 rounded-lg shadow-lg shadow-pink-500/30 transition-all transform hover:-translate-y-0.5"
+          class="mt-4 bg-pink-500 hover:bg-stone-900 text-stone-900 hover:text-pink-500 border-4 border-stone-900 font-black font-mono tracking-widest uppercase py-4 shadow-[8px_8px_0_0_#1c1917] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all"
         >
-          Kirim
+          SEBARKAN RAHASIA
         </button>
       </form>
       
-      <div id="alert-sukses" class="hidden mt-4 p-4 bg-green-500/10 border border-green-500/50 rounded-lg text-green-400 text-sm text-center">
-        Sukses! Refresh halaman buat liat pesannya.
+      <div id="alert-sukses" class="hidden mt-6 p-4 bg-emerald-400 border-4 border-stone-900 shadow-[6px_6px_0_0_#1c1917] text-stone-900 font-mono font-black uppercase text-center tracking-widest animate-bounce">
+        STATUS: BERHASIL! MEMUAT ULANG DATA...
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="confess-grid">
-      {confessions?.map((item) => (
-        <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-5 hover:bg-gray-800 transition-colors">
-          <div class="flex items-center gap-2 mb-3">
-            <span class="bg-pink-500/20 text-pink-400 text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">
-              Untuk: {item.to}
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8" id="confess-grid">
+      {confessions?.map((item, index) => (
+        <div class={`bg-stone-200 border-4 border-stone-900 p-6 md:p-8 shadow-[8px_8px_0_0_#1c1917] relative group hover:z-10 hover:-translate-y-2 transition-transform duration-200 ${index % 2 === 0 ? 'rotate-2' : '-rotate-1'} hover:rotate-0 flex flex-col`}>
+          
+          <div class="mb-6 flex">
+            <span class="bg-pink-500 border-2 border-stone-900 text-stone-900 text-xs font-black px-3 py-1.5 uppercase tracking-widest shadow-[4px_4px_0_0_#1c1917]">
+              KPD: {item.to}
             </span>
           </div>
-          <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">{item.message}</p>
+
+          <p class="text-stone-800 font-mono font-bold leading-relaxed whitespace-pre-wrap flex-grow text-lg">
+            "{item.message}"
+          </p>
+
+          <div class="mt-6 pt-4 border-t-4 border-stone-900 border-dotted text-right">
+            <span class="text-stone-500 font-mono text-xs font-bold uppercase tracking-widest">
+              - PENGIRIM ANONIM -
+            </span>
+          </div>
         </div>
       ))}
       
       {(!confessions || confessions.length === 0) && (
-        <div class="col-span-full text-center py-10 text-gray-500 italic">
-          Belum ada confess yang masuk. Jadilah yang pertama!
+        <div class="col-span-full text-center py-20 bg-stone-900 border-4 border-dashed border-stone-700 shadow-[8px_8px_0_0_#1c1917]">
+          <p class="text-stone-500 font-mono text-xl font-bold uppercase tracking-widest">
+            BELUM ADA RAHASIA YANG TERBONGKAR.
+          </p>
         </div>
       )}
     </div>
@@ -88,43 +108,54 @@ const { data: confessions } = await supabase
 <script>
   import { supabase } from '../lib/supabase.js';
 
-  const form = document.getElementById('form-confess');
-  const btnKirim = document.getElementById('btn-kirim');
-  const alertSukses = document.getElementById('alert-sukses');
+  function initConfessForm() {
+    const form = document.getElementById('form-confess') as HTMLFormElement;
+    const btnKirim = document.getElementById('btn-kirim') as HTMLButtonElement;
+    const alertSukses = document.getElementById('alert-sukses');
 
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const tujuanInput = document.getElementById('tujuan').value.trim();
-      const pesanInput = document.getElementById('pesan').value.trim();
-
-      if (!tujuanInput || !pesanInput) return;
-
-      const originalText = btnKirim.innerHTML;
-      btnKirim.innerHTML = "Mengirim... ⏳";
-      btnKirim.disabled = true;
-
-      const { error } = await supabase
-        .from('confess')
-        .insert([
-          { to: tujuanInput, message: pesanInput }
-        ]);
-
-      if (error) {
-        console.error("Gagal kirim confess:", error);
-        alert("Error");
-        btnKirim.innerHTML = originalText;
-        btnKirim.disabled = false;
-      } else {
-        form.reset();
-        form.style.display = 'none';
-        alertSukses.classList.remove('hidden');
+    if (form && btnKirim && alertSukses) {
+      // Pakai onsubmit buat nyegah event double dari Astro View Transitions
+      form.onsubmit = async (e) => {
+        e.preventDefault();
         
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      }
-    });
+        const tujuanInput = (document.getElementById('tujuan') as HTMLInputElement).value.trim();
+        const pesanInput = (document.getElementById('pesan') as HTMLTextAreaElement).value.trim();
+
+        if (!tujuanInput || !pesanInput) return;
+
+        const originalText = btnKirim.innerHTML;
+        btnKirim.innerHTML = "MENGIRIM SANDI... ⏳";
+        btnKirim.disabled = true;
+        btnKirim.classList.add('opacity-50', 'cursor-not-allowed');
+
+        try {
+          const { error } = await supabase
+            .from('confess')
+            .insert([
+              { to: tujuanInput, message: pesanInput }
+            ]);
+
+          if (error) throw error;
+
+          form.reset();
+          form.style.display = 'none';
+          alertSukses.classList.remove('hidden');
+          
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+
+        } catch (error) {
+          console.error("Gagal kirim confess:", error);
+          alert("Gagal menyebarkan rahasia! Coba lagi.");
+          btnKirim.innerHTML = originalText;
+          btnKirim.disabled = false;
+          btnKirim.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+      };
+    }
   }
+
+  // Wajib pakai ini buat ngebinding ulang script setelah pindah halaman
+  document.addEventListener('astro:page-load', initConfessForm);
 </script>

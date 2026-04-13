@@ -3,140 +3,150 @@ import Layout from '../layout/navbar.astro';
 import { supabase } from '../lib/supabase.js'
 import '../styles/global.css'
 
-const { data: message } = await supabase.from('kesanpesan').select('*');
+// Tarik data dari database lu
+const { data: message } = await supabase.from('kesanpesan').select('*').order('id', { ascending: false });
 
-const dummyMessages = [
-  { nama: "Ikhsan Null", peran: "ICT / Dev", pesan: "Web angkatan ini bukti nyata kalau anak IT bisa ninggalin warisan digital yang keren. Sukses terus buat Angkatan 38!", tanggal: "08 Apr 2026" },
-  { nama: "Akbar", peran: "Gamer / Siswa", pesan: "Semoga kita semua bisa mencapai cita-cita masing-masing. Jangan lupa mabar Minecraft lagi kalau udah pada sibuk!", tanggal: "07 Apr 2026" },
-  { nama: "Budi Santoso", peran: "Panitia Mubes", pesan: "Terima kasih atas kerja keras semuanya selama event kemarin. Kalian luar biasa, walau kadang sering debat wkwk.", tanggal: "06 Apr 2026" },
-  { nama: "Siti Aminah", peran: "Bendahara", pesan: "Jangan lupa pada bayar uang kas sebelum lulus woy! Btw sukses buat kita semua yaa.", tanggal: "05 Apr 2026" },
-];
 ---
 
-<Layout title="Kesan & Pesan - ATHARVA TRIASTA">
-  <div class="max-w-7xl mx-auto px-6 py-12 mt-10 animate-fade-in-up">
+<Layout title="Buku Tamu - ATHARVA TRIASTA">
+  <div class="max-w-7xl mx-auto px-6 py-12 mt-10">
     
-    <div class="mb-12 text-center">
-      <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-        Kesan & <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">Pesan</span>
+    <div class="mb-16 text-center border-b-4 border-stone-800 pb-8">
+      <span class="inline-block py-1 px-3 bg-orange-500 border-2 border-stone-900 text-stone-900 text-xs font-mono font-bold tracking-widest mb-6 shadow-[4px_4px_0_0_#1c1917] transform rotate-1">
+        BUKU TAMU DIGITAL
+      </span>
+      <h1 class="text-5xl md:text-7xl font-black text-stone-100 tracking-tighter mb-4 uppercase drop-shadow-[4px_4px_0_#292524]">
+        Kesan & Pesan
       </h1>
-      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-        Tinggalkan jejak kenangan, unek-unek, atau harapan manis untuk Angkatan 38 di sini.
+      <p class="text-stone-400 font-mono text-lg max-w-2xl mx-auto font-bold uppercase tracking-widest">
+        Tinggalkan jejak kenangan atau unek-unek untuk Angkatan 38.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
       
       <div class="lg:col-span-1">
-        <div class="bg-gray-800/50 backdrop-blur-xl p-6 rounded-2xl border border-gray-700 shadow-xl sticky top-24">
-          <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
-            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-            Tulis Pesanmu
+        <div class="bg-[#f4ecd8] p-8 border-4 border-stone-900 shadow-[12px_12px_0_0_#1c1917] sticky top-32 transform -rotate-1">
+          
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-6 bg-stone-300/80 border-2 border-stone-400 transform rotate-2 z-20 pointer-events-none"></div>
+
+          <h2 class="text-2xl font-black text-stone-900 mb-8 uppercase tracking-tighter border-b-4 border-stone-900 pb-4 inline-block">
+            TULIS MEMO
           </h2>
           
-          <form id="form-pesan" class="space-y-5">
+          <form id="form-pesan" class="space-y-6">
             <div>
-              <label class="block text-sm font-medium text-gray-400 mb-1.5">Nama</label>
-              <input type="text" id="input-nama" placeholder="Cth: Ikhsan Null" class="w-full bg-gray-900/50 border border-gray-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-gray-600" required />
+              <label class="block text-sm font-mono font-bold text-stone-900 mb-2 uppercase tracking-widest">Nama Lengkap</label>
+              <input type="text" id="input-nama" placeholder="CTH: IKHSAN NULL" class="w-full bg-stone-100 border-4 border-stone-900 text-stone-900 px-4 py-3 focus:outline-none focus:bg-white focus:shadow-[4px_4px_0_0_#ea580c] transition-all placeholder-stone-400 font-mono font-bold uppercase" required />
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-gray-400 mb-1.5">Kelas</label>
-              <input type="text" id="input-peran" placeholder="Cth: XII.E" class="w-full bg-gray-900/50 border border-gray-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-gray-600" required />
+              <label class="block text-sm font-mono font-bold text-stone-900 mb-2 uppercase tracking-widest">Kelas / Peran</label>
+              <input type="text" id="input-peran" placeholder="CTH: XII.E / SYSADMIN" class="w-full bg-stone-100 border-4 border-stone-900 text-stone-900 px-4 py-3 focus:outline-none focus:bg-white focus:shadow-[4px_4px_0_0_#ea580c] transition-all placeholder-stone-400 font-mono font-bold uppercase" required />
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-gray-400 mb-1.5">Pesan</label>
-              <textarea id="input-pesan" rows="4" placeholder="Terserah Apa aja" class="w-full bg-gray-900/50 border border-gray-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all resize-none placeholder-gray-600" required></textarea>
+              <label class="block text-sm font-mono font-bold text-stone-900 mb-2 uppercase tracking-widest">Pesan</label>
+              <textarea id="input-pesan" rows="5" placeholder="TULIS UNTUK ANGKATAN 38..." class="w-full bg-stone-100 border-4 border-stone-900 text-stone-900 px-4 py-3 focus:outline-none focus:bg-white focus:shadow-[4px_4px_0_0_#ea580c] transition-all resize-none placeholder-stone-400 font-mono font-bold" required></textarea>
             </div>
             
-            <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-white font-bold py-3.5 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] transform transition hover:-translate-y-0.5">
-              Kirim ke DB
+            <button type="submit" class="w-full bg-orange-500 hover:bg-stone-900 text-stone-900 hover:text-orange-500 border-4 border-stone-900 font-black font-mono tracking-widest uppercase py-4 shadow-[6px_6px_0_0_#1c1917] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
+              CETAK PESAN
             </button>
           </form>
         </div>
       </div>
 
-      <div class="lg:col-span-2 space-y-5">
-        {message?.map((item) => (
-          <div class="bg-gray-800/40 hover:bg-gray-800/80 transition-all duration-300 p-6 md:p-8 rounded-2xl border border-gray-700/50 shadow-md relative group overflow-hidden">
+      <div class="lg:col-span-2 space-y-8" id="pesan-container">
+        {message?.map((item, index) => (
+          /* Kartu Memo dengan rotasi selang-seling */
+          <div class={`bg-stone-200 p-8 border-4 border-stone-900 shadow-[8px_8px_0_0_#1c1917] relative group hover:z-10 hover:-translate-y-1 transition-transform duration-200 ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'} hover:rotate-0`}>
             
-            <div class="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all duration-500"></div>
+            <div class="absolute top-4 right-6 w-4 h-4 bg-orange-500 border-2 border-stone-900 rounded-full shadow-[2px_2px_0_0_#1c1917]"></div>
             
-            <svg class="absolute top-6 right-6 w-10 h-10 text-gray-700/50 group-hover:text-emerald-500/20 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <svg class="absolute top-6 left-6 w-12 h-12 text-stone-300 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
             
-            <p class="text-gray-300 leading-relaxed mb-6 relative z-10 text-lg">
+            <p class="text-stone-800 font-mono font-bold leading-relaxed mb-8 relative z-10 text-lg pt-8 pl-8 pr-4">
               "{item.pesan}"
             </p>
             
-            <div class="flex items-center justify-between border-t border-gray-700/50 pt-5 mt-auto relative z-10">
+            <div class="flex items-center justify-between border-t-4 border-stone-900 pt-6 mt-auto">
               <div class="flex items-center gap-4">
-                <div class="w-11 h-11 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border border-gray-600 flex items-center justify-center text-white font-bold text-lg shadow-inner">
+                <div class="w-12 h-12 bg-stone-900 border-2 border-stone-900 flex items-center justify-center text-stone-100 font-black text-xl shadow-[4px_4px_0_0_#ea580c]">
                   {item.nama ? item.nama.charAt(0).toUpperCase() : '?'}
                 </div>
                 <div>
-                  <h3 class="text-white font-semibold">{item.nama}</h3>
-                  <p class="text-emerald-400 text-xs font-medium uppercase tracking-wider">{item.peran}</p>
+                  <h3 class="text-stone-900 font-black uppercase tracking-tight">{item.nama}</h3>
+                  <p class="text-orange-600 text-xs font-mono font-bold uppercase tracking-widest">{item.peran}</p>
                 </div>
               </div>
-              <span class="text-gray-500 text-xs font-medium bg-gray-900/60 border border-gray-800 px-3 py-1.5 rounded-full hidden md:block">
-                {item.time}
+              
+              <span class="text-stone-500 text-[10px] font-mono font-bold bg-stone-300 border-2 border-stone-400 px-2 py-1 uppercase hidden md:block transform rotate-2">
+                {item.time || 'ARSIP'}
               </span>
             </div>
           </div>
         ))}
         
-        <div class="pt-6 flex justify-center">
-          <button class="px-8 py-2.5 rounded-full bg-gray-800/50 hover:bg-gray-700 border border-gray-700 text-gray-300 hover:text-white transition-all text-sm font-semibold flex items-center gap-2">
-            <svg class="w-4 h-4 animate-spin hidden" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-            Load Lebih Banyak
+        <div class="pt-8 flex justify-center">
+          <button class="px-8 py-4 bg-stone-800 hover:bg-orange-500 border-4 border-stone-900 text-stone-100 hover:text-stone-900 font-mono font-bold uppercase tracking-widest shadow-[6px_6px_0_0_#1c1917] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
+            BACA LEMBAR SELANJUTNYA
           </button>
         </div>
 
       </div>
-      
     </div>
   </div>
 </Layout>
 
 <script>
-
   import { supabase } from "../lib/supabase";
-  const form = document.getElementById('form-pesan')
-  const btn = form?.querySelector('button[type="submit"]')
+  
+  function initGuestbook() {
+    const form = document.getElementById('form-pesan') as HTMLFormElement;
+    const btn = form?.querySelector('button[type="submit"]');
 
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault()
-      const nama = (document.getElementById('input-nama') as HTMLFormElement).value
-      const peran = (document.getElementById('input-peran') as HTMLFormElement).value
-      const pesan = (document.getElementById('input-pesan') as HTMLFormElement).value
+    if (form && btn) {
+      // Pakai .onsubmit biar nggak numpuk event listener pas pindah halaman
+      form.onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const nama = (document.getElementById('input-nama') as HTMLInputElement).value;
+        const peran = (document.getElementById('input-peran') as HTMLInputElement).value;
+        const pesan = (document.getElementById('input-pesan') as HTMLTextAreaElement).value;
 
-      const originaltext = btn.innerHTML
-      btn.innerHTML = 'Mengirim'
-      btn.disabled = true
+        const originaltext = btn.innerHTML;
+        
+        // Animasi tombol loading retro
+        btn.innerHTML = 'MENCETAK... ⏳';
+        btn.disabled = true;
+        btn.classList.add('opacity-50', 'cursor-wait');
 
-      try { 
-          const { error } = await supabase.from('kesanpesan').insert([{
-            nama: nama,
-            peran: peran,
-            pesan: pesan
-          }])
+        try { 
+            const { error } = await supabase.from('kesanpesan').insert([{
+              nama: nama,
+              peran: peran,
+              pesan: pesan
+            }]);
 
-        if (error) throw error
+          if (error) throw error;
 
-        form.reset()
-        window.location.reload()
+          form.reset();
+          // Force reload biar pesan baru langsung muncul
+          window.location.reload();
 
-      } catch (err) {
-        console.error('Error : ', err.message)
-        alert('Error')
-      } finally {
-        btn.innerHTML = originaltext
-        btn.disabled = false
-      }
-
-    })
+        } catch (err) {
+          console.error('Error : ', err.message);
+          alert('Gagal mencetak pesan! Coba lagi.');
+        } finally {
+          btn.innerHTML = originaltext;
+          btn.disabled = false;
+          btn.classList.remove('opacity-50', 'cursor-wait');
+        }
+      };
+    }
   }
 
+  // Wajib pakai ini buat support View Transitions Astro
+  document.addEventListener('astro:page-load', initGuestbook);
 </script>

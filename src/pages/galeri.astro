@@ -12,52 +12,67 @@ const { data: initialPhotos, count: totalCount } = await supabase
 const sisaAwal = (totalCount || 0) - (initialPhotos?.length || 0);
 ---
 
-<Layout title="Galeri - ATHARVA TRIASTA">
+<Layout title="Arsip Visual - ATHARVA TRIASTA">
   <div class="max-w-7xl mx-auto px-6 py-12 mt-10">
     
-    <div class="mb-12 text-center">
-      <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-        Galeri <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Kenangan</span>
+    <div class="mb-16 text-center border-b-4 border-stone-800 pb-8">
+      <span class="inline-block py-1 px-3 bg-orange-500 border-2 border-stone-900 text-stone-900 text-xs font-mono font-bold tracking-widest mb-6 shadow-[4px_4px_0_0_#1c1917] transform -rotate-1">
+        ARSIP VISUAL
+      </span>
+      <h1 class="text-5xl md:text-7xl font-black text-stone-100 tracking-tighter mb-4 uppercase drop-shadow-[4px_4px_0_#292524]">
+        Galeri Kenangan
       </h1>
-      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-        Ada total {totalCount || 0} foto Angkatan 38 yang tersimpan.
+      <p class="text-stone-400 font-mono text-lg max-w-2xl mx-auto font-bold uppercase tracking-widest">
+        {totalCount || 0} Foto Memori Angkatan 38.
       </p>
     </div>
 
-    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {initialPhotos?.map((foto) => (
-        <div class="gallery-item relative group rounded-xl overflow-hidden cursor-zoom-in shadow-md aspect-square bg-gray-800" data-src={foto.image_url} data-title={foto.title}>
-          <img 
-            src={foto.image_url} 
-            alt={foto.title} 
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-            loading="lazy" 
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 text-left">
-            <span class="text-[10px] font-bold tracking-widest text-blue-400 uppercase mb-1">{foto.category}</span>
-            <span class="text-white font-semibold text-sm drop-shadow-md truncate">{foto.title}</span>
+    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 auto-rows-max">
+      {initialPhotos?.map((foto, index) => (
+        <div class={`gallery-item bg-[#f4ecd8] p-3 pb-14 border-4 border-stone-900 shadow-[8px_8px_0_0_#1c1917] relative group cursor-zoom-in transition-transform duration-300 hover:rotate-0 hover:z-10 hover:-translate-y-2 ${index % 2 === 0 ? 'rotate-2' : '-rotate-2'}`} data-src={foto.image_url} data-title={foto.title}>
+          
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-6 bg-stone-300/80 border-2 border-stone-400 transform -rotate-2 z-20 pointer-events-none"></div>
+
+          <div class="w-full aspect-square border-2 border-stone-800 overflow-hidden bg-stone-200">
+            <img 
+              src={foto.image_url} 
+              alt={foto.title} 
+              class="w-full h-full object-cover filter grayscale-[40%] sepia-[30%] contrast-125 group-hover:grayscale-0 group-hover:sepia-0 transition-all duration-500" 
+              loading="lazy" 
+            />
+          </div>
+          
+          <div class="absolute bottom-3 left-0 w-full text-center px-4 flex flex-col">
+            <span class="text-stone-500 text-[9px] font-mono font-bold uppercase tracking-widest mb-0.5">{foto.category}</span>
+            <span class="text-stone-900 font-mono font-bold text-sm truncate">{foto.title}</span>
           </div>
         </div>
       ))}
     </div>
 
     {totalCount > 24 && (
-      <div class="mt-12 flex justify-center">
-        <button id="btn-load-more" class="px-8 py-3 rounded-full bg-gray-800 hover:bg-gray-700 text-white font-semibold border border-gray-700 hover:border-blue-500 transition-all flex items-center gap-2 shadow-lg disabled:opacity-50">
-          Load More 
-          <span id="sisa-counter" class="bg-gray-900 text-gray-300 text-xs py-1 px-2 rounded-md ml-2">{sisaAwal} sisa</span>
+      <div class="mt-20 flex justify-center">
+        <button id="btn-load-more" class="px-8 py-4 bg-stone-200 hover:bg-orange-500 text-stone-900 font-bold font-mono uppercase tracking-widest border-4 border-stone-900 transition-all flex items-center gap-2 shadow-[8px_8px_0_0_#1c1917] hover:shadow-none hover:translate-x-1 hover:translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-[8px_8px_0_0_#1c1917]">
+          Muat Arsip Lainnya
+          <span id="sisa-counter" class="bg-stone-900 text-stone-100 text-xs py-1 px-2 ml-2 border-2 border-stone-900">{sisaAwal} SISA</span>
         </button>
       </div>
     )}
   </div>
 
-  <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md hidden items-center justify-center p-4">
-    <button id="close-lightbox" class="absolute top-4 right-4 md:top-8 md:right-8 text-gray-400 hover:text-white transition-colors bg-gray-900/60 p-3 rounded-full hover:bg-gray-800 z-50">
-      <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+  <div id="lightbox" class="fixed inset-0 z-[3000] bg-stone-900/95 hidden items-center justify-center p-4 md:p-8">
+    <button id="close-lightbox" class="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 bg-[#f4ecd8] border-4 border-stone-900 text-stone-900 hover:bg-orange-500 shadow-[6px_6px_0_0_#1c1917] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all z-50 flex items-center justify-center cursor-pointer">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
-    <div class="relative max-w-6xl w-full flex flex-col items-center justify-center">
-      <img id="lightbox-img" src="" alt="Zoomed Foto" class="max-h-[80vh] md:max-h-[90vh] max-w-full rounded-md shadow-2xl object-contain" />
-      <p id="lightbox-title" class="text-gray-200 mt-4 text-base md:text-lg font-medium tracking-wide"></p>
+    
+    <div class="relative max-w-5xl w-full flex flex-col items-center justify-center">
+      <div class="bg-[#f4ecd8] p-4 pb-20 border-4 border-stone-900 shadow-[16px_16px_0_0_#1c1917] relative transform rotate-1 max-w-full">
+        <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-32 h-10 bg-stone-300/80 border-2 border-stone-400 transform -rotate-2 z-20 pointer-events-none"></div>
+        
+        <img id="lightbox-img" src="" alt="Zoomed Foto" class="max-h-[70vh] md:max-h-[80vh] max-w-full border-4 border-stone-900 object-contain bg-stone-200" />
+        
+        <p id="lightbox-title" class="absolute bottom-6 left-0 w-full text-center text-stone-900 font-mono font-bold text-xl md:text-2xl uppercase tracking-widest px-6 truncate"></p>
+      </div>
     </div>
   </div>
 </Layout>
@@ -78,36 +93,31 @@ const sisaAwal = (totalCount || 0) - (initialPhotos?.length || 0);
     const lightboxTitle = document.getElementById('lightbox-title');
     const closeBtn = document.getElementById('close-lightbox');
 
-    // Pengaman: Kalau script ini jalan di halaman Home/Kelas (bukan di Galeri), stop eksekusinya.
     if (!grid) return;
 
-    // 1. FUNGSI BUKA FOTO (LIGHTBOX)
     const bindLightbox = () => {
       const galleryItems = document.querySelectorAll('.gallery-item:not(.bound)');
       galleryItems.forEach(item => {
-        // Pakai .onclick biar nggak numpuk event-nya pas pindah-pindah halaman
         item.onclick = () => {
           if (lightboxImg && lightboxTitle && lightbox) {
             lightboxImg.setAttribute('src', item.getAttribute('data-src') || '');
             lightboxTitle.textContent = item.getAttribute('data-title') || '';
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
-            document.body.style.overflow = 'hidden'; // Matiin scroll layar belakang
+            document.body.style.overflow = 'hidden'; 
           }
         };
         item.classList.add('bound');
       });
     };
 
-    // Jalankan binding pertama kali
     bindLightbox();
 
-    // 2. FUNGSI TUTUP FOTO
     const closeLightbox = () => {
       if (lightbox) {
         lightbox.classList.add('hidden');
         lightbox.classList.remove('flex');
-        document.body.style.overflow = 'auto'; // Nyalain scroll lagi
+        document.body.style.overflow = 'auto'; 
       }
     };
 
@@ -118,17 +128,15 @@ const sisaAwal = (totalCount || 0) - (initialPhotos?.length || 0);
       };
     }
 
-    // 3. FUNGSI TOMBOL LOAD MORE
     if (btnLoadMore) {
       btnLoadMore.onclick = async () => {
         if (isFetching) return;
         isFetching = true;
 
         const originalText = btnLoadMore.innerHTML;
-        btnLoadMore.innerText = "Sabar, lagi narik data... ⏳";
+        btnLoadMore.innerText = "MENARIK ARSIP... ⏳";
         btnLoadMore.disabled = true;
 
-        // Ambil data dari database elu
         const { data: newPhotos, error } = await supabase
           .from('galleries')
           .select('*')
@@ -136,14 +144,21 @@ const sisaAwal = (totalCount || 0) - (initialPhotos?.length || 0);
           .range(currentOffset, currentOffset + itemsPerLoad - 1);
 
         if (newPhotos && newPhotos.length > 0) {
-          // Render HTML foto baru
           newPhotos.forEach(foto => {
+            // Logic rotasi selang-seling buat foto baru
+            const currentItemCount = grid.children.length;
+            const rotationClass = currentItemCount % 2 === 0 ? 'rotate-2' : '-rotate-2';
+
+            // HTML Template yang udah disesuaikan dengan Polaroid Style
             const itemHTML = `
-              <div class="gallery-item relative group rounded-xl overflow-hidden cursor-zoom-in shadow-md aspect-square bg-gray-800 animate-fade-in-up" data-src="${foto.image_url}" data-title="${foto.title}">
-                <img src="${foto.image_url}" alt="${foto.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 text-left">
-                  <span class="text-[10px] font-bold tracking-widest text-blue-400 uppercase mb-1">${foto.category}</span>
-                  <span class="text-white font-semibold text-sm drop-shadow-md truncate">${foto.title}</span>
+              <div class="gallery-item bg-[#f4ecd8] p-3 pb-14 border-4 border-stone-900 shadow-[8px_8px_0_0_#1c1917] relative group cursor-zoom-in transition-transform duration-300 hover:rotate-0 hover:z-10 hover:-translate-y-2 animate-fade-in-up ${rotationClass}" data-src="${foto.image_url}" data-title="${foto.title}">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-6 bg-stone-300/80 border-2 border-stone-400 transform -rotate-2 z-20 pointer-events-none"></div>
+                <div class="w-full aspect-square border-2 border-stone-800 overflow-hidden bg-stone-200">
+                  <img src="${foto.image_url}" alt="${foto.title}" class="w-full h-full object-cover filter grayscale-[40%] sepia-[30%] contrast-125 group-hover:grayscale-0 group-hover:sepia-0 transition-all duration-500" loading="lazy" />
+                </div>
+                <div class="absolute bottom-3 left-0 w-full text-center px-4 flex flex-col">
+                  <span class="text-stone-500 text-[9px] font-mono font-bold uppercase tracking-widest mb-0.5">${foto.category}</span>
+                  <span class="text-stone-900 font-mono font-bold text-sm truncate">${foto.title}</span>
                 </div>
               </div>
             `;
@@ -152,23 +167,21 @@ const sisaAwal = (totalCount || 0) - (initialPhotos?.length || 0);
 
           currentOffset += newPhotos.length;
           
-          // Kalkulasi sisa foto
-          const totalTextElement = document.querySelector('p.text-gray-400');
+          const totalTextElement = document.querySelector('p.text-stone-400');
           const totalNow = totalTextElement ? parseInt(totalTextElement.innerText.match(/\d+/)[0]) : 0;
           const sisa = totalNow - currentOffset;
           
-          if (sisaCounter) sisaCounter.textContent = `${sisa > 0 ? sisa : 0} sisa`;
+          if (sisaCounter) sisaCounter.textContent = `${sisa > 0 ? sisa : 0} SISA`;
 
           if (newPhotos.length < itemsPerLoad || sisa <= 0) {
-            btnLoadMore.remove(); // Hapus tombol kalau data udah abis
+            btnLoadMore.remove(); 
           }
 
-          bindLightbox(); // KASIH "NYAWA" (Event Click) ke foto-foto yang baru aja di-load
+          bindLightbox(); 
         }
 
         isFetching = false;
         
-        // Cek apakah tombol masih ada di DOM (belum dihapus) sebelum balikin teksnya
         if (document.body.contains(btnLoadMore)) {
           btnLoadMore.innerHTML = originalText;
           btnLoadMore.disabled = false;
@@ -177,6 +190,5 @@ const sisaAwal = (totalCount || 0) - (initialPhotos?.length || 0);
     }
   }
 
-  // JURUS PAMUNGKAS: Panggil fungsi ini tiap kali Astro beres mindahin halaman
   document.addEventListener('astro:page-load', setupGaleri);
 </script>
