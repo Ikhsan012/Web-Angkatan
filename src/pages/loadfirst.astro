@@ -1,0 +1,73 @@
+<div id="retro-loader" transition:persist="terminal-loader" class="fixed inset-0 z-[9999] bg-stone-900 flex flex-col items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.87,0,0.13,1)]">
+  <div class="border-4 border-stone-100 p-6 md:p-8 w-11/12 max-w-lg bg-stone-800 shadow-[12px_12px_0_0_#ea580c] transform -rotate-1 relative">
+    <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-20 h-8 bg-stone-300/80 border-2 border-stone-400 transform rotate-2 z-20 pointer-events-none"></div>
+
+    <h2 class="text-stone-100 font-mono text-2xl md:text-3xl font-black uppercase mb-4 border-b-4 border-stone-500 pb-2 tracking-tighter">
+      MEMULAI
+    </h2>
+    
+    <div class="font-mono text-stone-400 text-sm md:text-base space-y-2 mb-8 h-20" id="loader-text">
+      <p class="animate-pulse">> TUNGGU...</p>
+      <p class="hidden">> MENGAMBIL DATA ARSIP 38...</p>
+      <p class="hidden text-orange-500">> SUKSES</p>
+    </div>
+    
+    <div class="w-full h-8 border-4 border-stone-100 bg-stone-900 p-1 flex gap-1">
+      <div class="progress-block h-full bg-transparent w-1/5 transition-colors"></div>
+      <div class="progress-block h-full bg-transparent w-1/5 transition-colors"></div>
+      <div class="progress-block h-full bg-transparent w-1/5 transition-colors"></div>
+      <div class="progress-block h-full bg-transparent w-1/5 transition-colors"></div>
+      <div class="progress-block h-full bg-transparent w-1/5 transition-colors"></div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    const loader = document.getElementById('retro-loader');
+    if (!loader) return;
+
+    if (sessionStorage.getItem('system-booted')) {
+      loader.style.display = 'none';
+      return;
+    }
+
+    document.documentElement.style.overflow = 'hidden';
+    
+    const lines = document.querySelectorAll('#loader-text p');
+    const blocks = document.querySelectorAll('.progress-block');
+    
+    setTimeout(() => { 
+      lines[0].classList.add('hidden');
+      lines[1].classList.remove('hidden'); 
+      blocks[0].classList.add('bg-orange-500');
+      blocks[1].classList.add('bg-orange-500');
+    }, 600);
+    
+    setTimeout(() => { 
+      lines[1].classList.add('hidden');
+      lines[2].classList.remove('hidden'); 
+      blocks[2].classList.add('bg-orange-500');
+      blocks[3].classList.add('bg-orange-500');
+    }, 1400);
+    
+    setTimeout(() => {
+      lines[2].innerHTML = '> Selamat Datang';
+      lines[2].classList.replace('text-orange-500', 'text-stone-100');
+      blocks[4].classList.add('bg-orange-500');
+      
+      blocks.forEach(b => b.classList.replace('bg-orange-500', 'bg-stone-300'));
+      
+      setTimeout(() => {
+        loader.style.transform = 'translateY(-100%)';
+        document.documentElement.style.overflow = 'auto'; 
+        sessionStorage.setItem('system-booted', 'true'); 
+        
+
+        setTimeout(() => {
+          loader.style.display = 'none';
+        }, 700);
+      }, 600);
+    }, 2200);
+  })();
+</script>
