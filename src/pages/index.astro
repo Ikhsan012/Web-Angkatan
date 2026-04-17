@@ -5,8 +5,15 @@ import '../styles/global.css'
 import Typewriter from 'astro-typewriter';
 import Analytics from '@vercel/analytics/astro'
 
+const { data: confessions } = await supabase
+  .from('confess')
+  .select('*')
+  .order('created_at', { ascending: false })
+  .limit(2);
+
 const { data: totalStudents } = await supabase.from('classes').select('jumlah')
 const { data: classes } = await supabase.from('classes').select('*');
+const { data: message } = await supabase.from('kesanpesan').select('*').order('id', { ascending: false }).limit(2);
 const { data: galleries } = await supabase.from('galleries').select('*').limit(1600);
 const randomPhotos = [...(galleries || [])]
   .sort(() => Math.random() - 0.7)
@@ -72,7 +79,7 @@ const totalsiswa = totalStudents ? totalStudents.reduce((total, kelas) => total 
     </div>
     
     {randomPhotos && randomPhotos.length > 0 ? (
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-10 auto-rows-[280px]">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 auto-rows-[280px]">
         {randomPhotos.map((foto, index) => (
           /* Polaroid Frame dengan rotasi selang-seling */
           <div class={`bg-[#f4ecd8] p-3 pb-12 border-2 border-stone-900 shadow-[8px_8px_0_0_#1c1917] relative group cursor-pointer transition-transform duration-300 hover:rotate-0 hover:z-10 hover:-translate-y-2 ${index % 2 === 0 ? 'rotate-2' : '-rotate-3'}`}>
@@ -92,7 +99,7 @@ const totalsiswa = totalStudents ? totalStudents.reduce((total, kelas) => total 
       </div>
     )}
 
-    <div class="max-w-4xl mx-auto px-6 py-24 mt-20">
+    <div class="max-w-4xl mx-auto px-2 md:px-8 py-24 mt-20">
       
       <div class="text-center mb-10">
         <h2 class="text-4xl font-black text-stone-100 tracking-tight uppercase border-y-4 border-stone-800 py-4 inline-block">
@@ -119,6 +126,90 @@ const totalsiswa = totalStudents ? totalStudents.reduce((total, kelas) => total 
         <div class="absolute bottom-0 right-0 w-3 h-3 md:w-4 md:h-4 border-b-4 border-r-4 border-stone-500 pointer-events-none z-20"></div>
       </div>
     </div>
+
+        <div class="flex items-end justify-between mb-12 border-b-4 border-stone-800 pb-4">
+      <div>
+        <h3 class="text-4xl font-black text-stone-100 mb-1 uppercase tracking-tight">Kesan Dan Pesan</h3>
+        <p class="text-stone-400 font-mono text-sm"></p>
+      </div>
+      <a href="/kesanpesan" class="text-stone-100 bg-stone-800 border-2 border-stone-600 px-4 py-2 text-sm font-bold transition-all shadow-[4px_4px_0_0_#57534e] hover:translate-x-1 hover:translate-y-1 hover:shadow-none flex items-center gap-2 uppercase">
+        Baca Lebih Banyak <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+      </a>
+    </div>
+
+    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8" id="pesan-container">
+        {message?.map((item, index) => (
+          /* Kartu Memo dengan rotasi selang-seling */
+          <div class={`bg-stone-200 p-8 border-4 border-stone-900 shadow-[8px_8px_0_0_#1c1917] relative group hover:z-10 hover:-translate-y-1 transition-transform duration-200 ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'} hover:rotate-0`}>
+            
+            <div class="absolute top-4 right-6 w-4 h-4 bg-orange-500 border-2 border-stone-900 rounded-full shadow-[2px_2px_0_0_#1c1917]"></div>
+            
+            <svg class="absolute top-6 left-6 w-12 h-12 text-stone-300 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            
+            <p class="text-stone-800 font-mono font-bold leading-relaxed mb-8 relative z-10 text-lg pt-8 pl-8 pr-4">
+              "{item.pesan}"
+            </p>
+            
+            <div class="flex items-center justify-between border-t-4 border-stone-900 pt-6 mt-auto">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-stone-900 border-2 border-stone-900 flex items-center justify-center text-stone-100 font-black text-xl shadow-[4px_4px_0_0_#ea580c]">
+                  {item.nama ? item.nama.charAt(0).toUpperCase() : '?'}
+                </div>
+                <div>
+                  <h3 class="text-stone-900 font-black uppercase tracking-tight">{item.nama}</h3>
+                  <p class="text-orange-600 text-xs font-mono font-bold uppercase tracking-widest">{item.peran}</p>
+                </div>
+              </div>
+              
+              <span class="text-stone-500 text-[10px] font-mono font-bold bg-stone-300 border-2 border-stone-400 px-2 py-1 uppercase hidden md:block transform rotate-2">
+                {item.time || 'ARSIP'}
+              </span>
+            </div>
+          </div>
+        ))}
+    </div>
+
+    <div class="flex items-end justify-between mb-12 border-b-4 border-stone-800 pb-4 mt-12">
+      <div>
+        <h3 class="text-4xl font-black text-stone-100 mb-1 uppercase tracking-tight">Pesan Rahasia </h3> 
+        <p class="text-stone-400 font-mono text-sm"></p>
+      </div>
+      <a href="/confess" class="text-stone-100 bg-stone-800 border-2 border-stone-600 px-4 py-2 text-sm font-bold transition-all shadow-[4px_4px_0_0_#57534e] hover:translate-x-1 hover:translate-y-1 hover:shadow-none flex items-center gap-2 uppercase">
+        Baca Lebih Banyak <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+      </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8" id="confess-grid">
+      {confessions?.map((item, index) => (
+        <div class={`bg-stone-200 border-4 border-stone-900 p-6 md:p-8 shadow-[8px_8px_0_0_#1c1917] relative group hover:z-10 hover:-translate-y-2 transition-transform duration-200 ${index % 2 === 0 ? 'rotate-2' : '-rotate-1'} hover:rotate-0 flex flex-col`}>
+          
+          <div class="mb-6 flex">
+            <span class="bg-pink-500 border-2 border-stone-900 text-stone-900 text-xs font-black px-3 py-1.5 uppercase tracking-widest shadow-[4px_4px_0_0_#1c1917]">
+              KPD: {item.to}
+            </span>
+          </div>
+
+          <p class="text-stone-800 font-mono font-bold leading-relaxed whitespace-pre-wrap flex-grow text-lg">
+            "{item.message}"
+          </p>
+
+          <div class="mt-6 pt-4 border-t-4 border-stone-900 border-dotted text-right">
+            <span class="text-stone-500 font-mono text-xs font-bold uppercase tracking-widest">
+              - PENGIRIM ANONIM -
+            </span>
+          </div>
+        </div>
+      ))}
+      
+      {(!confessions || confessions.length === 0) && (
+        <div class="col-span-full text-center py-20 bg-stone-900 border-4 border-dashed border-stone-700 shadow-[8px_8px_0_0_#1c1917]">
+          <p class="text-stone-500 font-mono text-xl font-bold uppercase tracking-widest">
+            BELUM ADA RAHASIA YANG TERBONGKAR.
+          </p>
+        </div>
+      )}
+    </div>
+
   </section>
 
 </Layout>
