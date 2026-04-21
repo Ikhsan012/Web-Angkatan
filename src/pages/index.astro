@@ -14,10 +14,17 @@ const { data: confessions } = await supabase
 const { data: totalStudents } = await supabase.from('classes').select('jumlah')
 const { data: classes } = await supabase.from('classes').select('*');
 const { data: message } = await supabase.from('kesanpesan').select('*').order('id', { ascending: false }).limit(2);
-const { data: galleries } = await supabase.from('galleries').select('*').limit(1600);
-const randomPhotos = [...(galleries || [])]
-  .sort(() => Math.random() - 0.7)
-  .slice(0, 6);
+const { data: allid } = await supabase.from('galleries').select('id')
+const randomid = (allid || [])
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 6)
+  .map(item => item.id)
+
+const { data: randomPhotos } = await supabase
+  .from('galleries')
+  .select('*')
+  .in('id', randomid)
+
 
 const totalsiswa = totalStudents ? totalStudents.reduce((total, kelas) => total + (kelas.jumlah || 0 ), 0) : 0
 ---
