@@ -3,7 +3,9 @@ import vercel from '@astrojs/vercel'; // Ganti dari '@astrojs/node'
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  // Pakai adapter Vercel biar sinkron sama package.json lu
+  image: {
+    domains: ['kwcftnoczlayucmxtlrs.supabase.co']
+  },
   adapter: vercel({
     webAnalytics: {
       enabled: true,

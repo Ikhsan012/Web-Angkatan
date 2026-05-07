@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase.js';
 import '../styles/global.css'
 import Typewriter from 'astro-typewriter';
 import Analytics from '@vercel/analytics/astro'
+import { Image } from 'astro:assets';
 
 const [
   { data: confessions },
@@ -98,8 +99,15 @@ const totalsiswa = totalStudents ? totalStudents.reduce((total, kelas) => total 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 auto-rows-[280px]">
         {randomPhotos.map((foto, index) => (
           <div class={`bg-[#f4ecd8] p-3 pb-12 border-2 border-stone-900 shadow-[8px_8px_0_0_#1c1917] relative group cursor-pointer transition-transform duration-300 hover:rotate-0 hover:z-10 hover:-translate-y-2 ${index % 2 === 0 ? 'rotate-2' : '-rotate-3'}`}>
-            <img src={foto.image_url} alt={foto.title} loading='lazy' class="w-full h-full object-cover border-2 border-stone-800 filter grayscale-[50%] sepia-[30%] contrast-125 group-hover:grayscale-0 group-hover:sepia-0 transition-all duration-500" />
-            
+            <Image 
+  src={foto.image_url} 
+  alt={foto.title} 
+  width={400} 
+  height={300} 
+  format="webp" 
+  loading="lazy" 
+  class="w-full h-full object-cover border-2 border-stone-800 filter grayscale-[50%] sepia-[30%] contrast-125 group-hover:grayscale-0 group-hover:sepia-0 transition-all duration-500" 
+/>
             <div class="absolute bottom-3 left-0 w-full text-center px-4">
               <span class="text-stone-900 font-mono font-bold text-sm truncate block">{foto.title}</span>
             </div>
