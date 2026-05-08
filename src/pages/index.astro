@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase.js';
 import '../styles/global.css'
 // import Typewriter from 'astro-typewriter';
 import Analytics from '@vercel/analytics/astro'
+import SpeedInsights from "@vercel/speed-insights/astro"
 import { Image } from 'astro:assets';
 
 const [
@@ -36,6 +37,7 @@ const totalsiswa = totalStudents ? totalStudents.reduce((total, kelas) => total 
 
 <Layout title="Home - ATHARVA TRIASTA">
   <Analytics />
+  <SpeedInsights/>
 
 <meta name="description" content="Arsip digital dan kenangan Angkatan 38 SMAN 2 Pangkep. Tempat semua cerita, kesan, pesan, dan memori dicetak abadi." />
   
