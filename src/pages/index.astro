@@ -44,8 +44,19 @@ const totalsiswa = totalStudents ? totalStudents.reduce((total, kelas) => total 
   <section class="relative min-h-[75vh] flex items-center justify-center text-center py-20 border-b-4 border-stone-800 bg-stone-900 overflow-hidden">
 <div class="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
   
-  <div class="absolute inset-0 opacity-20 grayscale contrast-125 mix-blend-overlay bg-[url('https://kwcftnoczlayucmxtlrs.supabase.co/storage/v1/object/public/ceremony-photos/public/memori-38-1260-1775544736614.webp')] bg-cover bg-center bg-fixed"></div>
+<div class="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
   
+  <img 
+    src="https://kwcftnoczlayucmxtlrs.supabase.co/storage/v1/object/public/ceremony-photos/public/memori-38-1260-1775544736614.webp" 
+    alt="Background Arsip" 
+    fetchpriority="high"
+    class="absolute inset-0 w-full h-full object-cover object-center opacity-20 grayscale contrast-125 mix-blend-overlay"
+  />
+
+  <div class="absolute inset-0 bg-gradient-to-b from-stone-900/30 via-stone-900/80 to-stone-900"></div>
+
+</div>
+
   <div class="absolute inset-0 bg-gradient-to-b from-stone-900/30 via-stone-900/80 to-stone-900"></div>
 
 </div>
